@@ -1,0 +1,12 @@
+{
+  "name": "session-workflow",
+  "version": "0.1.0",
+  "description": "Claude Code skills for an AI-assisted session workflow: tech-spec authoring, diff review and refinement, auto-loop orchestration, and skill creation.",
+  "author": {
+    "name": "jupiter-Pulin"
+  },
+  "homepage": "https://github.com/jupiter-Pulin/will-session-workflow",
+  "repository": "https://github.com/jupiter-Pulin/will-session-workflow",
+  "license": "MIT",
+  "keywords": ["workflow", "skills", "code-review", "tech-spec", "automation"]
+}

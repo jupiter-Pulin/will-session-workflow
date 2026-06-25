@@ -1,0 +1,15 @@
+{
+  "name": "will-session-workflow",
+  "owner": {
+    "name": "jupiter-Pulin"
+  },
+  "description": "Session workflow skills for Claude Code.",
+  "plugins": [
+    {
+      "name": "session-workflow",
+      "source": "./",
+      "description": "Claude Code skills for an AI-assisted session workflow: tech-spec authoring, diff review and refinement, auto-loop orchestration, and skill creation.",
+      "version": "0.1.0"
+    }
+  ]
+}
