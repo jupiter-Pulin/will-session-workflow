@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "stage": "refine-diff",
+  "gate": "changes_required",
+  "opportunities": [
+    {
+      "impact": "Medium",
+      "file": "src/foo.ts",
+      "line": 42,
+      "title": "Inline single-use helper",
+      "payoff": "Makes the main flow easier to read.",
+      "evidence": "The helper has one caller and hides no invariant.",
+      "suggestion": "Inline it into the caller.",
+      "safety": "No behavior, public contract, side effect, or test expectation changes."
+    }
+  ],
+  "keep": [],
+  "reuseCandidates": [],
+  "notWorthChanging": [],
+  "blockers": []
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "stage": "post-refine-check",
+  "gate": "ready",
+  "findings": [],
+  "acRegression": [
+    {
+      "acId": "AC-001",
+      "status": "pass",
+      "evidence": "Existing validation still covers the behavior after refinement."
+    }
+  ],
+  "validation": {
+    "baselineCommands": [
+      {
+        "command": "yarn test test/foo.test.ts",
+        "status": "passed",
+        "exitCode": 0,
+        "artifact": ".agent-runs/<run-id>/validation/yarn-test.json"
+      }
+    ],
+    "additionalCommands": [],
+    "testChangesInspected": true
+  },
+  "residualRisk": false,
+  "blockers": []
+}

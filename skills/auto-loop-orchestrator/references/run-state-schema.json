@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://claude.local/auto-loop-orchestrator/run-state.schema.json",
+  "title": "Auto Loop Run State",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "runId",
+    "feature",
+    "runDir",
+    "createdAt",
+    "updatedAt",
+    "inputs",
+    "repo",
+    "state",
+    "artifacts",
+    "transitions",
+    "blockers"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "runId": {
+      "type": "string"
+    },
+    "feature": {
+      "type": "string"
+    },
+    "runDir": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "inputs": {
+      "type": "object",
+      "required": ["featureDir", "techSpec"],
+      "properties": {
+        "featureDir": {
+          "type": "string"
+        },
+        "techSpec": {
+          "$ref": "#/$defs/fileRecord"
+        }
+      },
+      "additionalProperties": true
+    },
+    "repo": {
+      "type": "object",
+      "required": ["root", "branch", "startHead", "currentHead", "dirtyAtStart", "dirtyNow"],
+      "properties": {
+        "root": {
+          "type": "string"
+        },
+        "branch": {
+          "type": ["string", "null"]
+        },
+        "startHead": {
+          "type": ["string", "null"]
+        },
+        "currentHead": {
+          "type": ["string", "null"]
+        },
+        "dirtyAtStart": {
+          "type": "boolean"
+        },
+        "dirtyNow": {
+          "type": "boolean"
+        }
+      }
+    },
+    "state": {
+      "type": "object",
+      "required": ["current", "status", "attempt", "nextRequired"],
+      "properties": {
+        "current": {
+          "type": "string"
+        },
+        "status": {
+          "enum": ["running", "passed", "blocked", "failed", "done"]
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "nextRequired": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "attempts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifactRecord"
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "$defs": {
+    "fileRecord": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      }
+    },
+    "artifactRecord": {
+      "type": "object",
+      "required": ["kind", "path", "sha256", "state", "recordedAt"],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "recordedAt": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

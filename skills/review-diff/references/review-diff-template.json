@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "stage": "review-diff",
+  "gate": "blocked",
+  "findings": [
+    {
+      "severity": "P1",
+      "file": "src/foo.ts",
+      "line": 42,
+      "title": "Missing fallback on upstream error",
+      "impact": "The endpoint can return 500 instead of the specified fallback.",
+      "trigger": "Upstream returns a non-success response.",
+      "evidence": "Changed code calls the upstream result without checking the status.",
+      "fix": "Return the documented fallback before reading the payload."
+    }
+  ],
+  "acCoverage": [
+    {
+      "acId": "AC-001",
+      "status": "fail",
+      "evidence": "The changed error path does not satisfy the fallback AC."
+    }
+  ],
+  "tests": {
+    "run": [
+      {
+        "command": "yarn test test/foo.test.ts",
+        "status": "passed"
+      }
+    ],
+    "suggested": []
+  },
+  "residualRisk": false,
+  "blockers": [
+    {
+      "code": "P1_FINDINGS",
+      "count": 1
+    }
+  ]
+}

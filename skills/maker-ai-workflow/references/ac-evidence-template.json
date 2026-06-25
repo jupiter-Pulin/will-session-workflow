@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "stage": "maker-self-check",
+  "gate": "verified",
+  "ac": [
+    {
+      "id": "AC-001",
+      "status": "pass",
+      "proof": [
+        {
+          "type": "command",
+          "ref": ".agent-runs/<run-id>/validation/yarn-test.json"
+        }
+      ],
+      "files": ["src/foo.ts", "test/foo.test.ts"],
+      "notes": ""
+    }
+  ],
+  "validation": {
+    "commands": [
+      {
+        "command": "yarn test test/foo.test.ts",
+        "status": "passed",
+        "exitCode": 0,
+        "artifact": ".agent-runs/<run-id>/validation/yarn-test.json"
+      }
+    ]
+  },
+  "blockers": []
+}
