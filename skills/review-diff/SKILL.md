@@ -48,7 +48,8 @@ When used in an AI development loop, run this as an independent Reviewer SubAgen
    - Keep spec coverage separate from bug findings.
 
 7. Review tests and validation.
-   - Identify whether changed behavior has direct tests or strong existing coverage.
+   - If a `test-gate.json` from the `test-gate` skill is available, consume it instead of re-deriving test strength: its `acProbes` already prove which tests falsify against the baseline and which are vacuous, and `mockBoundary` records mock-only coverage. Limit your own judgment to what the probe cannot see — assertion quality, edge-case breadth, and missing scenarios.
+   - Otherwise, identify whether changed behavior has direct tests or strong existing coverage.
    - Recommend focused tests for real risk. Do not demand tests for every line.
    - Run tests only when the user asked for a full verification pass or when local context makes the command obvious and cheap.
 

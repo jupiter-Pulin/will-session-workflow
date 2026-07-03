@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "stage": "test-gate",
+  "gate": "blocked",
+  "acProbes": [
+    {
+      "acId": "AC-001",
+      "testCommand": "yarn test test/foo.test.ts",
+      "baselineRef": "abc1234",
+      "baselineResult": "passed",
+      "verdict": "vacuous",
+      "notes": "Test still passes against the pre-change baseline; it does not pin the new behavior."
+    }
+  ],
+  "mockBoundary": [
+    {
+      "acId": "AC-001",
+      "status": "mocked",
+      "notes": "The upstream client is fully mocked; the test never exercises the real HTTP call path described by this AC."
+    }
+  ],
+  "residualRisk": true,
+  "blockers": [
+    {
+      "code": "VACUOUS_TEST",
+      "count": 1
+    }
+  ]
+}

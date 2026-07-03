@@ -1,6 +1,6 @@
 ---
 name: refine-diff
-description: Review already-correct diffs to simplify AI-generated or over-engineered code while preserving behavior.
+description: Review already-correct diffs to simplify AI-generated or over-engineered code while preserving behavior. Use after review-diff is Ready, or when asked to de-AI-ify a diff, remove premature abstractions, reduce duplication, or check reuse of existing helpers/patterns. Not for correctness bugs (use review-diff) or final regression verification (use post-refine-check).
 ---
 
 # Refine Diff

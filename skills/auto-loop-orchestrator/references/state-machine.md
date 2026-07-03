@@ -29,6 +29,7 @@ Allowed state names:
 | `task-pack` | `ai-tech-spec` | Tech spec has been converted to the minimal Maker-facing task pack. |
 | `maker` | `maker-ai-workflow` | Maker is implementing from the controlling contract. |
 | `maker-self-check` | `maker-ai-workflow` | Maker is recording AC evidence, validation, and request-log proof. |
+| `test-gate` | `test-gate` | AC-mapped tests are being probed against the pre-change baseline for vacuous or mock-only coverage. |
 | `review-diff` | `review-diff` | Independent correctness review is running or complete. |
 | `review-fix` | `maker-ai-workflow` | Maker is fixing blocking review findings. |
 | `refine-diff` | `refine-diff` | Maintainability and simplification review is running or complete. |
@@ -56,7 +57,8 @@ Use `blocked` when the next action is known but current gate failed. Use `failed
 | `initialized` | `task-pack` |
 | `task-pack` | `maker` |
 | `maker` | `maker-self-check` |
-| `maker-self-check` | `review-diff` |
+| `maker-self-check` | `test-gate` |
+| `test-gate` | `review-diff` |
 | `review-diff` | `refine-diff` |
 | `review-fix` | `review-diff` |
 | `refine-diff` | `refine-apply` |
@@ -68,9 +70,15 @@ Blocked transitions:
 
 | Blocked state | Next required |
 | --- | --- |
+| `test-gate` | `maker` |
 | `review-diff` | `review-fix` |
+| `refine-diff` | `review-diff` |
 | `post-refine-check` | `refine-apply` |
 | Any other state | Same state |
+
+`test-gate` blocks back to `maker`: a vacuous or mock-only test means the Maker must write a test that actually pins the behavior; the flow then re-runs `maker-self-check` and `test-gate` naturally.
+
+`refine-diff` blocks back to `review-diff` rather than looping on itself: per `refine-diff`'s own scope, a `blocked` gate there usually means the diff needs another correctness pass before simplification can safely proceed.
 
 Use `pass --next <state>` only for explicit no-op or skipped stages. The override must be one of the allowed states.
 
@@ -83,6 +91,7 @@ Recommended artifact kind names:
 - `ac-evidence`
 - `validation-plan`
 - `validation-command`
+- `test-gate`
 - `review-diff`
 - `review-fixes`
 - `refine-diff`

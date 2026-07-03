@@ -21,6 +21,7 @@ Do not use this skill to:
 
 - Create feasibility studies, requirements, tech specs, or task packs. Use `ai-tech-spec`.
 - Implement code, request logs, AC evidence, or tests. Use `maker-ai-workflow`.
+- Probe whether AC tests falsify against the baseline. Use `test-gate`.
 - Review correctness. Use `review-diff`.
 - Review maintainability or simplification. Use `refine-diff`.
 - Run final regression verification after refinement. Use `post-refine-check`.
@@ -87,6 +88,7 @@ initialized
   -> task-pack
   -> maker
   -> maker-self-check
+  -> test-gate
   -> review-diff
   -> refine-diff
   -> refine-apply
@@ -98,7 +100,9 @@ initialized
 Repair loops:
 
 ```text
+test-gate blocked -> maker -> maker-self-check -> test-gate
 review-diff blocked -> review-fix -> review-diff
+refine-diff blocked -> review-diff
 post-refine-check blocked -> refine-apply -> post-refine-check
 ```
 

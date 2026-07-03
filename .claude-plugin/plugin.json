@@ -1,7 +1,7 @@
 {
   "name": "session-workflow",
-  "version": "0.1.0",
-  "description": "Claude Code skills for an AI-assisted session workflow: tech-spec authoring, diff review and refinement, auto-loop orchestration, and skill creation.",
+  "version": "0.2.0",
+  "description": "Claude Code skills, read-only review subagents, and safety/validation hooks for an AI-assisted session workflow: tech-spec authoring, test-gate baseline probing, diff review and refinement, auto-loop orchestration, and skill creation.",
   "author": {
     "name": "jupiter-Pulin"
   },

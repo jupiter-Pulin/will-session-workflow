@@ -11,6 +11,7 @@ const STATES = new Set([
   "task-pack",
   "maker",
   "maker-self-check",
+  "test-gate",
   "review-diff",
   "review-fix",
   "refine-diff",
@@ -26,7 +27,8 @@ const DEFAULT_NEXT = {
   initialized: "task-pack",
   "task-pack": "maker",
   maker: "maker-self-check",
-  "maker-self-check": "review-diff",
+  "maker-self-check": "test-gate",
+  "test-gate": "review-diff",
   "review-diff": "refine-diff",
   "review-fix": "review-diff",
   "refine-diff": "refine-apply",
@@ -37,7 +39,9 @@ const DEFAULT_NEXT = {
 };
 
 const BLOCKED_NEXT = {
+  "test-gate": "maker",
   "review-diff": "review-fix",
+  "refine-diff": "review-diff",
   "post-refine-check": "refine-apply",
 };
 

@@ -45,6 +45,32 @@ If sources conflict, stop and ask for spec review. Do not silently edit ACs or w
 
 After implementation in an auto-loop, compare the final diff against the ACs and produce `ac-evidence.json` using `references/ac-evidence-template.json`.
 
+## Test-fix Mode
+
+When re-entering `maker` after a `test-gate` block, read `test-gate.json` instead of guessing what failed:
+
+- For every probe with `verdict: "vacuous"`, rewrite the test so it exercises the behavior the AC describes and would fail without the change. Do not touch the implementation to make the old test meaningful.
+- For `mockBoundary` entries marked `"mocked"` or `"partial"`, replace the mock at the boundary the AC describes with the real module, integration, or e2e path, or record why real coverage is impossible.
+- Do not weaken the AC, and do not delete the probe mapping; the flow re-runs `maker-self-check` and `test-gate` after the fix.
+
+## Review-fix Mode
+
+When resuming as `review-fix` after a `review-diff` block, read `review-diff.json` instead of re-deriving findings from prose. Fix only findings recorded there:
+
+- Address every `P0` and `P1` finding; the `fix` field is a starting point, not a substitute for reading the surrounding code.
+- Do not fold in `refine-diff`-style cleanups during this pass; scope is limited to the blocking findings.
+- Do not edit acceptance criteria to make a finding moot unless the finding shows the AC itself is wrong, in which case stop and ask for spec review instead of silently narrowing it.
+- Update `ac-evidence.json` for any AC whose status changed, then hand control back to `review-diff` for re-review.
+
+## Refine-apply Mode
+
+When resuming as `refine-apply` after a `refine-diff` report with `gate: changes_required`, apply only the recorded `opportunities`:
+
+- Treat each opportunity's `safety` field as the behavior-preservation bar; if applying it would change behavior, public contract, or test intent, skip it and record why instead of forcing the edit.
+- Do not introduce new abstractions or cleanups beyond what `refine-diff` recommended.
+- Re-run the tests referenced in `ac-evidence.json` after applying changes; a refinement that breaks a previously passing test is rejected, not patched around.
+- Hand control to `post-refine-check` when done; do not self-declare the refinement complete.
+
 ## Scripts
 
 - `scripts/check-ac-traceability.mjs <request-log.md> [--spec <spec.md>]`: verify that AC evidence exists and every recorded AC has proof or a justified exemption.
